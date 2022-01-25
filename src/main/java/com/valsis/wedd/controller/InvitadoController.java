@@ -16,16 +16,25 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.valsis.wedd.model.Evento;
 import com.valsis.wedd.model.Invitado;
 import com.valsis.wedd.service.InvitadoService;
 
 @RestController
 @RequestMapping("/api/invitados")
 public class InvitadoController {
-	
+
 	@Autowired
 	private InvitadoService invitadoService;
-	
+
+	@GetMapping(value="/evento")
+	public List<Evento> listEvento(){
+		List<Evento> eventos;
+		eventos = invitadoService.getListEventos();
+		return eventos;
+	}
+
 	public InvitadoController(InvitadoService invitadoService) {
 		super();
 		this.invitadoService = invitadoService;
@@ -46,7 +55,7 @@ public class InvitadoController {
 			response.put("message", e.getMessage());
 			response.put("success ", false);
 			return response;
-			
+
 		}
 	}
 
@@ -67,14 +76,14 @@ public class InvitadoController {
 				response.put("success", false);
 				return response;
 			}
-			
+
 		} catch (Exception e) {
 			response.put("message", ""+e.getMessage());
 			response.put("success", false);
 			return response;
 		}
 	}
-	
+
 	@DeleteMapping(value="/delete/{id}")
 	public Map<String, Object> delete(@PathVariable("id") int id){
 		HashMap<String, Object> response = new HashMap<String, Object>();
@@ -84,7 +93,7 @@ public class InvitadoController {
 			response.put("success", true);
 			return response;
 		} catch (Exception e) {
-			
+
 			response.put("message", e.getMessage());
 			response.put("success", false);
 			return response;
@@ -97,7 +106,7 @@ public class InvitadoController {
 		List<Invitado> invitados = invitadoService.getList();
 		return invitados;
 	}
-	
+
 	@PostMapping("/")
 	public ResponseEntity<Invitado> saveInvitado(@RequestBody Invitado invitado){
 		return new ResponseEntity<Invitado> (invitadoService.saveInvitado(invitado), HttpStatus.CREATED);
@@ -164,7 +173,7 @@ public class InvitadoController {
 		}catch(Exception e){
 			System.out.println(e);
 			return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
-			
+
 		}
 	}*/
 }

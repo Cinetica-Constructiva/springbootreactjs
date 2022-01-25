@@ -1,5 +1,6 @@
 package com.valsis.wedd.service;
 
+import com.valsis.wedd.model.Evento;
 import com.valsis.wedd.model.Invitado;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,8 @@ public interface InvitadoService {
     Optional<Invitado> findByPhone(String phone);
 	/** Actualizar */
 	Invitado updateInvitado(Invitado invitado);
+	/** Listar Eventos de tabla secundaria "eventos" */
+	List<Evento> getListEventos();
 
 		
 }

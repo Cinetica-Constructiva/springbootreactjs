@@ -38,11 +38,19 @@ public class Invitado {
 	@Column(name="phone")
 	private String phone;
 	
-	@NotNull(message="El Evento es requerido.")
-	@ManyToOne(fetch=FetchType.LAZY)
+	//@NotNull(message="El Evento es requerido.")
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="evento")
 	@JsonIgnoreProperties({"hibernateLazyInizialiter", "handler"})
 	private Evento evento;
+
+	public Evento getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
+	}
 
 	public int getId() {
 		return id;
@@ -63,11 +71,13 @@ public class Invitado {
 		this.phone = phone;
 	}
 		
-	public Invitado(int id, String name, String phone) {
+	public Invitado(int id, String name, String phone, Evento evento) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.phone = phone;
+		this.evento = evento;
+	
 	}
 	public String getName() {
 		return name;

@@ -1,5 +1,6 @@
 package com.valsis.wedd.serviceImpl;
 
+import com.valsis.wedd.model.Evento;
 import com.valsis.wedd.model.Invitado;
 import com.valsis.wedd.service.InvitadoService;
 import com.valsis.wedd.repository.InvitadoRepository;
@@ -48,6 +49,16 @@ public class InvitadoServiceImpl implements InvitadoService {
 	@Override
 	public Invitado updateInvitado(Invitado invitado) {
 		return (Invitado) invitadoRepo.saveAndFlush(invitado);
+	}
+
+	@Override
+	public List<Evento> getListEventos() {
+		// Listar Eventos de tabla vinculada "eventos
+		
+		List<Evento> listEventos;
+		listEventos = invitadoRepo.findAllEvento();
+		
+		return listEventos;
 	}
 
 }

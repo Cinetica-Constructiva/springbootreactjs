@@ -10,13 +10,17 @@ export default class Edit extends Component {
     this.state={
       id:0,
       fieldName:"",
-      fieldPhone:""
+      fieldPhone:"",
+      selectEvento:null,
+      listEvento:[]
     }
   }
-  
+
   async componentDidMount(){
     console.log("Montaje de edicion correcto.");
     // se obtiene el id por parametro en la url
+    // Cargar listado de eventos
+    this.setListEvento();
     //const id = this.props.match.params.id;
     const path = window.location.pathname.split('/')
     const id = path[path.length - 1]
@@ -28,13 +32,18 @@ export default class Edit extends Component {
       this.setState({
         id: res.data.id,
         fieldName:res.data.name,
-        fieldPhone:res.data.phone
+        fieldPhone:res.data.phone,
+        selectEvento: res.data.evento
       })
     }else{
       alert("Error ==> "+res.message);
       console.log(res.data);
       console.log("No se obtubo la informacion requerida.")
     }
+  }
+
+  async setListEvento(){
+      invitadoServices.listEvento().then((res)=>{this.setState({listEvento:res})})
   }
 
   render() {
@@ -66,11 +75,29 @@ export default class Edit extends Component {
           </div>
         </div>
 
+        <div className="row">
+    			<div className="col-md-6 mb-3">
+    				<label htmlFor="evento"> Evento</label>
+    					<select className="form-control"
+    						onChange={(event)=>this.setState({selectEvento:event.target.value})}>
+    						<option selected>{this.state.selectEvento.nombre} </option>
+    						{
+    							this.state.listEvento.map((select)=>{
+    								return(
+    									<option value={JSON.stringify(select)}> {select.nombre} </option>
+
+    								)
+    							})
+    						}
+    					</select>
+    			</div>
+    		</div>
+
 				<div className="row">
 					<div className="col-md-6 mb-3">
-            <button 
+            <button
 				      onClick={()=>this.onClickSave()}
-				      className="btn btn-primary btn-block" 
+				      className="btn btn-primary btn-block"
 				      type="submit">
 					      Guardar
 				    </button>
@@ -101,8 +128,6 @@ export default class Edit extends Component {
 			dataError.push(res.data.message)
 			this.setState({errorField:dataError})
 		}
-
-	
 	}else{
 		/** alert("Error ===> "+ res.message.message)*/
 		console.log(res);
@@ -110,9 +135,6 @@ export default class Edit extends Component {
 		const dataError = []
 		dataError.push(res.message);
 		this.setState({errorField:dataError});
-		
 	}
-	
-}
-
+ }
 }

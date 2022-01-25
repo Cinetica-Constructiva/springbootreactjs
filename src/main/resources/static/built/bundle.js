@@ -52500,7 +52500,9 @@ var Edit = /*#__PURE__*/function (_Component) {
     _this.state = {
       id: 0,
       fieldName: "",
-      fieldPhone: ""
+      fieldPhone: "",
+      selectEvento: null,
+      listEvento: []
     };
     return _this;
   }
@@ -52515,15 +52517,17 @@ var Edit = /*#__PURE__*/function (_Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 console.log("Montaje de edicion correcto."); // se obtiene el id por parametro en la url
-                //const id = this.props.match.params.id;
+                // Cargar listado de eventos
+
+                this.setListEvento(); //const id = this.props.match.params.id;
 
                 path = window.location.pathname.split('/');
                 id = path[path.length - 1]; // se trae el objeto que corresponde al id
 
-                _context.next = 5;
+                _context.next = 6;
                 return _services_Invitado__WEBPACK_IMPORTED_MODULE_8__["default"].get(id);
 
-              case 5:
+              case 6:
                 res = _context.sent;
                 console.log(res);
 
@@ -52532,7 +52536,8 @@ var Edit = /*#__PURE__*/function (_Component) {
                   this.setState({
                     id: res.data.id,
                     fieldName: res.data.name,
-                    fieldPhone: res.data.phone
+                    fieldPhone: res.data.phone,
+                    selectEvento: res.data.evento
                   });
                 } else {
                   alert("Error ==> " + res.message);
@@ -52540,7 +52545,7 @@ var Edit = /*#__PURE__*/function (_Component) {
                   console.log("No se obtubo la informacion requerida.");
                 }
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -52555,9 +52560,39 @@ var Edit = /*#__PURE__*/function (_Component) {
       return componentDidMount;
     }()
   }, {
+    key: "setListEvento",
+    value: function () {
+      var _setListEvento = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee2() {
+        var _this2 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _services_Invitado__WEBPACK_IMPORTED_MODULE_8__["default"].listEvento().then(function (res) {
+                  _this2.setState({
+                    listEvento: res
+                  });
+                });
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function setListEvento() {
+        return _setListEvento.apply(this, arguments);
+      }
+
+      return setListEvento;
+    }()
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       /**   let userId = Number(this.state.id);*/
 
@@ -52573,7 +52608,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "form-control",
         value: this.state.fieldName,
         onChange: function onChange(event) {
-          return _this2.setState({
+          return _this3.setState({
             fieldName: event.target.value
           });
         }
@@ -52588,7 +52623,7 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "form-control",
         value: this.state.fieldPhone,
         onChange: function onChange(event) {
-          return _this2.setState({
+          return _this3.setState({
             fieldPhone: event.target.value
           });
         }
@@ -52596,9 +52631,28 @@ var Edit = /*#__PURE__*/function (_Component) {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-md-6 mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "evento"
+      }, " Evento"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("select", {
+        className: "form-control",
+        onChange: function onChange(event) {
+          return _this3.setState({
+            selectEvento: event.target.value
+          });
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("option", {
+        selected: true
+      }, this.state.selectEvento.nombre, " "), this.state.listEvento.map(function (select) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("option", {
+          value: JSON.stringify(select)
+        }, " ", select.nombre, " ");
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-md-6 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.onClickSave();
+          return _this3.onClickSave();
         },
         className: "btn btn-primary btn-block",
         type: "submit"
@@ -52607,18 +52661,18 @@ var Edit = /*#__PURE__*/function (_Component) {
   }, {
     key: "onClickSave",
     value: function () {
-      var _onClickSave = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee2() {
+      var _onClickSave = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee3() {
         var res, dataError, error, _dataError;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.next = 2;
+                _context3.next = 2;
                 return _services_Invitado__WEBPACK_IMPORTED_MODULE_8__["default"].update(this.state);
 
               case 2:
-                res = _context2.sent;
+                res = _context3.sent;
 
                 if (res.sucess) {
                   alert(res.message);
@@ -52658,10 +52712,10 @@ var Edit = /*#__PURE__*/function (_Component) {
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function onClickSave() {
@@ -52735,29 +52789,66 @@ var Form = /*#__PURE__*/function (_Component) {
     _this.state = {
       fieldName: "",
       fieldPhone: "",
-      errorField: []
+      errorField: [],
+      selectEvento: null,
+      listEvento: []
     };
     return _this;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(Form, [{
+    key: "comoponentDidMOunt",
+    value: function comoponentDidMOunt() {
+      this.setListEvento();
+    }
+  }, {
+    key: "setListEvento",
+    value: function () {
+      var _setListEvento = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee() {
+        var _this2 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _services_Invitado__WEBPACK_IMPORTED_MODULE_8__["default"].listEvento().then(function (res) {
+                  _this2.setState({
+                    listEvento: res
+                  });
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function setListEvento() {
+        return _setListEvento.apply(this, arguments);
+      }
+
+      return setListEvento;
+    }()
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h5", null, "Nuevo Invitado v1.0 ", this.state.fieldName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h5", null, "Nuevo Invitado v2.0 ", this.state.fieldName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-md-6 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "firstName"
-      }, "Name invitado"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+      }, "Nombre del Invitado"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
         className: "form-control",
-        placeholder: "Name",
+        placeholder: "Nombre",
         value: this.state.fieldName,
         onChange: function onChange(event) {
-          return _this2.setState({
+          return _this3.setState({
             fieldName: event.target.value
           });
         }
@@ -52767,17 +52858,36 @@ var Form = /*#__PURE__*/function (_Component) {
         className: "col-md-6 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "phone"
-      }, "Phone "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+      }, " Telefono "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
         className: "form-control",
-        placeholder: "123467890",
+        placeholder: "099123456",
         value: this.state.fieldPhone,
         onChange: function onChange(event) {
-          return _this2.setState({
+          return _this3.setState({
             fieldPhone: event.target.value
           });
         }
-      }))), this.state.errorField.map(function (itemError) {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-md-6 mb-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "evento"
+      }, " Evento"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("select", {
+        className: "form-control",
+        onChange: function onChange(event) {
+          return _this3.setState({
+            selectEvento: event.target.value
+          });
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("option", {
+        selected: true
+      }, "Seleccione ... "), this.state.listEvento.map(function (select) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("option", {
+          value: JSON.stringify(select)
+        }, " ", select.nombre, " ");
+      })))), this.state.errorField.map(function (itemError) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", {
           className: "text-warning"
         }, "*", itemError);
@@ -52787,7 +52897,7 @@ var Form = /*#__PURE__*/function (_Component) {
         className: "col-md-6 mb-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.onClickSave();
+          return _this3.onClickSave();
         },
         className: "btn btn-primary btn-block",
         type: "submit"
@@ -52796,18 +52906,18 @@ var Form = /*#__PURE__*/function (_Component) {
   }, {
     key: "onClickSave",
     value: function () {
-      var _onClickSave = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee() {
+      var _onClickSave = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.mark(function _callee2() {
         var res, dataError, error, _dataError;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.next = 2;
+                _context2.next = 2;
                 return _services_Invitado__WEBPACK_IMPORTED_MODULE_8__["default"].create(this.state);
 
               case 2:
-                res = _context.sent;
+                res = _context2.sent;
 
                 if (res.sucess) {
                   alert(res.message);
@@ -52847,10 +52957,10 @@ var Form = /*#__PURE__*/function (_Component) {
 
               case 4:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function onClickSave() {
@@ -52863,18 +52973,6 @@ var Form = /*#__PURE__*/function (_Component) {
 
   return Form;
 }(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
-/**  onClickSave()
-{
-	const res = await invitadoServices.create(this.state)
-	if(res.sucess){
-		alert(res.message)
-		window.location.replace("/invitado/index")
-	}else{
-		alert("Error ===> "+ res.message.message)
-	}
-	
-}*/
-
 
 
 
@@ -52995,14 +53093,16 @@ var List = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("th", {
         scope: "col"
-      }, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("th", {
+      }, "Nombre"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("th", {
         scope: "col"
-      }, "Phone"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("th", {
+      }, "Tel\xE9fono"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("th", {
         scope: "col"
-      }, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("tbody", null, this.state.listInvitados.map(function (data) {
+      }, "Evento"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("th", {
+        scope: "col"
+      }, "Acci\xF3n"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("tbody", null, this.state.listInvitados.map(function (data) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("th", {
           scope: "row"
-        }, data.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, data.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, data.phone), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Link"], {
+        }, data.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, data.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, data.phone), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, data.evento.nombre), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Link"], {
           className: "btn btn-outline-info",
           to: "/invitado/edit/" + data.id
         }, " Editar "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
@@ -53112,17 +53212,17 @@ __webpack_require__.r(__webpack_exports__);
 var baseUrl = "http://localhost:8080/api/invitados";
 
 var invitado = {};
-/** List */
+/** Listar Eventos */
 
-invitado.list = /*#__PURE__*/_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee() {
-  var urlList, res;
+invitado.listEvento = /*#__PURE__*/_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee() {
+  var urlEvento, res;
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          urlList = baseUrl + "/list";
+          urlEvento = baseUrl + "/evento";
           _context.next = 3;
-          return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlList).then(function (response) {
+          return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlEvento).then(function (response) {
             return response.data;
           })["catch"](function (error) {
             return error;
@@ -53139,17 +53239,46 @@ invitado.list = /*#__PURE__*/_babel_runtime_helpers_asyncToGenerator__WEBPACK_IM
     }
   }, _callee);
 }));
+/** Invitados */
+
+/** List */
+
+invitado.list = /*#__PURE__*/_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee2() {
+  var urlList, res;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee2$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          urlList = baseUrl + "/list";
+          _context2.next = 3;
+          return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlList).then(function (response) {
+            return response.data;
+          })["catch"](function (error) {
+            return error;
+          });
+
+        case 3:
+          res = _context2.sent;
+          return _context2.abrupt("return", res);
+
+        case 5:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, _callee2);
+}));
 /** Delete */
 
 invitado["delete"] = /*#__PURE__*/function () {
-  var _ref2 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee2(id) {
+  var _ref3 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee3(id) {
     var urlDelete, res;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee2$(_context2) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
             urlDelete = baseUrl + "/delete/" + id;
-            _context2.next = 3;
+            _context3.next = 3;
             return axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](urlDelete).then(function (response) {
               return response.data;
             })["catch"](function (error) {
@@ -53157,43 +53286,9 @@ invitado["delete"] = /*#__PURE__*/function () {
             });
 
           case 3:
-            res = _context2.sent;
+            res = _context3.sent;
 
           case 4:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-
-  return function (_x) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-/** Get */
-
-
-invitado.get = /*#__PURE__*/function () {
-  var _ref3 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee3(id) {
-    var urlGet, res;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            urlGet = baseUrl + "/get/" + id;
-            _context3.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlGet).then(function (response) {
-              return response.data;
-            })["catch"](function (error) {
-              return error;
-            });
-
-          case 3:
-            res = _context3.sent;
-            return _context3.abrupt("return", res);
-
-          case 5:
           case "end":
             return _context3.stop();
         }
@@ -53201,38 +53296,33 @@ invitado.get = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function (_x2) {
+  return function (_x) {
     return _ref3.apply(this, arguments);
   };
 }();
-/** Update */
+/** Get */
 
 
-invitado.update = /*#__PURE__*/function () {
-  var _ref4 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee4(state) {
-    var datapost, urlUpdate, res;
+invitado.get = /*#__PURE__*/function () {
+  var _ref4 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee4(id) {
+    var urlGet, res;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            datapost = {
-              id: state.id,
-              name: state.fieldName,
-              phone: state.fieldPhone
-            };
-            urlUpdate = baseUrl + "/update/" + state.id;
-            _context4.next = 4;
-            return axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(urlUpdate, datapost).then(function (response) {
+            urlGet = baseUrl + "/get/" + id;
+            _context4.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(urlGet).then(function (response) {
               return response.data;
             })["catch"](function (error) {
-              return error.response;
+              return error;
             });
 
-          case 4:
+          case 3:
             res = _context4.sent;
             return _context4.abrupt("return", res);
 
-          case 6:
+          case 5:
           case "end":
             return _context4.stop();
         }
@@ -53240,27 +53330,29 @@ invitado.update = /*#__PURE__*/function () {
     }, _callee4);
   }));
 
-  return function (_x3) {
+  return function (_x2) {
     return _ref4.apply(this, arguments);
   };
 }();
-/** Create */
+/** Update */
 
 
-invitado.create = /*#__PURE__*/function () {
+invitado.update = /*#__PURE__*/function () {
   var _ref5 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee5(state) {
-    var datapost, urlPost, res;
+    var datapost, urlUpdate, res;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
             datapost = {
+              id: state.id,
               name: state.fieldName,
-              phone: state.fieldPhone
+              phone: state.fieldPhone,
+              evento: JSON.parse(state.selectEvento)
             };
-            urlPost = baseUrl + "/create";
+            urlUpdate = baseUrl + "/update/" + state.id;
             _context5.next = 4;
-            return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(urlPost, datapost).then(function (response) {
+            return axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(urlUpdate, datapost).then(function (response) {
               return response.data;
             })["catch"](function (error) {
               return error.response;
@@ -53278,13 +53370,52 @@ invitado.create = /*#__PURE__*/function () {
     }, _callee5);
   }));
 
-  return function (_x4) {
+  return function (_x3) {
     return _ref5.apply(this, arguments);
+  };
+}();
+/** Create */
+
+
+invitado.create = /*#__PURE__*/function () {
+  var _ref6 = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.mark(function _callee6(state) {
+    var datapost, urlPost, res;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_1___default.a.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            datapost = {
+              name: state.fieldName,
+              phone: state.fieldPhone,
+              evento: JSON.parse(state.selectEvento)
+            };
+            urlPost = baseUrl + "/create";
+            _context6.next = 4;
+            return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(urlPost, datapost).then(function (response) {
+              return response.data;
+            })["catch"](function (error) {
+              return error.response;
+            });
+
+          case 4:
+            res = _context6.sent;
+            return _context6.abrupt("return", res);
+
+          case 6:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
+  }));
+
+  return function (_x4) {
+    return _ref6.apply(this, arguments);
   };
 }();
 /**
 
- Create 
+ Create
 invitado.create = async(state)=>{
 
    const datapost ={
@@ -53301,10 +53432,10 @@ invitado.create = async(state)=>{
   })
   .catch(error =>{
     const data = {
-      success:false, 
+      success:false,
       error:response.data+ data.fieldName + data.fieldPhone+ urlPost};
       console.log( "Error en los datos: "+ response.data+ data.fieldName + data.fieldPhone+ urlPost);
-    
+
     return data;
   })
   return res;

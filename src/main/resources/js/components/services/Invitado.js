@@ -4,6 +4,16 @@ import axios from "axios";
 
 const invitado = {}
 
+/** Listar Eventos */
+invitado.listEvento = async() => {
+  const urlEvento = baseUrl+"/evento"
+  const res = await axios.get(urlEvento)
+  .then(response =>{return response.data})
+  .catch(error => {return error})
+  return res;
+}
+
+/** Invitados */
 /** List */
 invitado.list = async () =>{
   const urlList = baseUrl+"/list";
@@ -34,11 +44,12 @@ invitado.get = async (id) =>{
 invitado.update = async(state)=>{
 
    const datapost ={
-    id: state.id, 
+    id: state.id,
     name: state.fieldName,
-    phone: state.fieldPhone
+    phone: state.fieldPhone,
+    evento: JSON.parse(state.selectEvento)
    }
-  
+
    const urlUpdate = baseUrl+"/update/"+state.id
    const res = await axios.put(urlUpdate, datapost)
    .then(response=>{return response.data})
@@ -52,7 +63,8 @@ invitado.create = async(state)=>{
 
   const datapost ={
    name: state.fieldName,
-   phone: state.fieldPhone
+   phone: state.fieldPhone,
+   evento: JSON.parse(state.selectEvento)
   }
 
  const urlPost = baseUrl+"/create";
@@ -66,7 +78,7 @@ invitado.create = async(state)=>{
 
 /**
 
- Create 
+ Create
 invitado.create = async(state)=>{
 
    const datapost ={
@@ -83,10 +95,10 @@ invitado.create = async(state)=>{
   })
   .catch(error =>{
     const data = {
-      success:false, 
+      success:false,
       error:response.data+ data.fieldName + data.fieldPhone+ urlPost};
       console.log( "Error en los datos: "+ response.data+ data.fieldName + data.fieldPhone+ urlPost);
-    
+
     return data;
   })
   return res;
@@ -102,8 +114,8 @@ async onClickSave()
 	}else{
 		alert("Error ===> "+ res.message.message)
 	}
-} */ 
-	
+} */
+
 
 
 export default invitado;

@@ -4,7 +4,7 @@ import invitadoServices from "../services/Invitado";
 import {Link} from "react-router-dom";
 
 export default class List extends Component {
-  
+
   constructor(){
     super()
     this.state={
@@ -29,27 +29,29 @@ export default class List extends Component {
           <thead className="thead-dark">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Action</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Evento</th>
+              <th scope="col">Acción</th>
             </tr>
           </thead>
           <tbody>
             {
               this.state.listInvitados.map((data)=>{
                 return (
-          
+
             <tr>
               <th scope="row">{data.id}</th>
               <td>{data.name}</td>
               <td>{data.phone}</td>
+              <td>{data.evento.nombre}</td>
               <td>
                 <Link className='btn btn-outline-info' to={"/invitado/edit/"+data.id}> Editar </Link>
-                
+
                 <a onClick={()=> this.onClickDelete(data.id)} href="/invitado/index/#" className="btn btn-danger"> Borrar </a>
               </td>
             </tr>
-              )  
+              )
           })
         }
           </tbody>

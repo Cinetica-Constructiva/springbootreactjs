@@ -10,34 +10,60 @@ export default class Form extends Component {
 			fieldName:"",
 			fieldPhone:"",
 			errorField:[],
+			selectEvento:null,
+			listEvento:[]
 		}
+	}
+
+	comoponentDidMOunt(){
+		this.setListEvento()
+	}
+
+	async setListEvento(){
+			invitadoServices.listEvento().then((res)=>{this.setState({listEvento:res})})
 	}
 
   render() {
     return (
       <div>
-      <h5>Nuevo Invitado v1.0 {this.state.fieldName}</h5>
-        
+      	<h5>Nuevo Invitado v2.0 {this.state.fieldName}</h5>
+
 		<div className="row">
-          <div className="col-md-6 mb-3">
-            <label htmlFor="firstName">Name invitado</label>
-            <input type="text" className="form-control" placeholder="Name"
+      <div className="col-md-6 mb-3">
+      	<label htmlFor="firstName">Nombre del Invitado</label>
+        	<input type="text" className="form-control" placeholder="Nombre"
             value={this.state.fieldName}
             onChange={(event)=>this.setState({fieldName:event.target.value})}/>
-          </div>
-        </div>
-
-				
+      </div>
+    </div>
 
 		<div className="row">
-          <div className="col-md-6 mb-3">
-			<label htmlFor="phone">Phone </label>
-	          <input type="text" className="form-control" placeholder="123467890"
+    	<div className="col-md-6 mb-3">
+				<label htmlFor="phone"> Telefono </label>
+	      	<input type="text" className="form-control" placeholder="099123456"
 	          value={this.state.fieldPhone}
 	          onChange={(event)=>this.setState({fieldPhone:event.target.value})}
 	           />
-          </div>
-        </div>
+      </div>
+  	</div>
+
+		<div className="row">
+			<div className="col-md-6 mb-3">
+				<label htmlFor="evento"> Evento</label>
+					<select className="form-control"
+						onChange={(event)=>this.setState({selectEvento:event.target.value})}>
+						<option selected>Seleccione ... </option>
+						{
+							this.state.listEvento.map((select)=>{
+								return(
+									<option value={JSON.stringify(select)}> {select.nombre} </option>
+
+								)
+							})
+						}
+					</select>
+			</div>
+		</div>
 
 		{
 			this.state.errorField.map((itemError)=>{
@@ -49,20 +75,20 @@ export default class Form extends Component {
 
 		<div className="row">
 			<div className="col-md-6 mb-3">
-		      	<button 
+		  	<button
 				  onClick={()=>this.onClickSave()}
-				  className="btn btn-primary btn-block" 
+				  className="btn btn-primary btn-block"
 				  type="submit">
 					  Guardar
 				</button>
 			</div>
 		</div>
-      </div>
+  </div>
     )
   }
 
-async  onClickSave()
-{
+ async  onClickSave()
+ {
 	const res = await invitadoServices.create(this.state)
 	if(res.sucess){
 		alert(res.message)
@@ -82,8 +108,6 @@ async  onClickSave()
 			dataError.push(res.data.message)
 			this.setState({errorField:dataError})
 		}
-
-	
 	}else{
 		/** alert("Error ===> "+ res.message.message)*/
 		console.log(res);
@@ -91,20 +115,6 @@ async  onClickSave()
 		const dataError = []
 		dataError.push(res.message);
 		this.setState({errorField:dataError});
-		
 	}
-	
+ }
 }
-}
-
-/**  onClickSave()
-{
-	const res = await invitadoServices.create(this.state)
-	if(res.sucess){
-		alert(res.message)
-		window.location.replace("/invitado/index")
-	}else{
-		alert("Error ===> "+ res.message.message)
-	}
-	
-}*/
