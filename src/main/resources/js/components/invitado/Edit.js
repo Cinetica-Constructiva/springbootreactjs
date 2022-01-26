@@ -80,7 +80,7 @@ export default class Edit extends Component {
     				<label htmlFor="evento"> Evento</label>
     					<select className="form-control"
     						onChange={(event)=>this.setState({selectEvento:event.target.value})}>
-    						<option selected>{this.state.selectEvento.nombre} </option>
+    						<option selected>Cargando.. </option>
     						{
     							this.state.listEvento.map((select)=>{
     								return(

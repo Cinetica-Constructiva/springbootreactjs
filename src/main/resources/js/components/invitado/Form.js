@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
 import invitadoServices from "../services/Invitado"
+import {Link} from "react-router-dom";
 
 export default class Form extends Component {
 
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 		this.state = {
 			fieldName:"",
 			fieldPhone:"",
@@ -15,12 +16,15 @@ export default class Form extends Component {
 		}
 	}
 
-	comoponentDidMOunt(){
+async componentDidMount(){
 		this.setListEvento()
 	}
 
 	async setListEvento(){
 			invitadoServices.listEvento().then((res)=>{this.setState({listEvento:res})})
+			alert("DropDown Select info: "+res.data+"***, and ***"+res.message);
+
+
 	}
 
   render() {
@@ -52,11 +56,11 @@ export default class Form extends Component {
 				<label htmlFor="evento"> Evento</label>
 					<select className="form-control"
 						onChange={(event)=>this.setState({selectEvento:event.target.value})}>
-						<option selected>Seleccione ... </option>
+								<option defaultValue>Seleccione.. </option>
 						{
 							this.state.listEvento.map((select)=>{
 								return(
-									<option value={JSON.stringify(select)}> {select.nombre} </option>
+									<option key={select.id} value={JSON.stringify(select)}> {select.nombre} </option>
 
 								)
 							})
