@@ -10,7 +10,7 @@ import {
     Link,
     Route
   } from 'react-router-dom';
-  
+
   import List from "./invitado/List";
   import Form from "./invitado/Form";
   import Edit from "./invitado/Edit";
@@ -19,10 +19,10 @@ import {
 
 
 const Main = () => {
-	
+
     return (
     <>
-    <hr />
+
     <Routes>
       <Route path="/" element={<Layout />} >
         <Route index element={<Home />} />
@@ -39,14 +39,14 @@ const Main = () => {
 }
 
 function Layout(){
-    return ( 
+    return (
     <>
       <div>
         <Nav />
-      <hr />
+      
         <Outlet />
       </div>
-    </>  
+    </>
     );
 }
 
@@ -69,4 +69,3 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById('main'),
   );
-

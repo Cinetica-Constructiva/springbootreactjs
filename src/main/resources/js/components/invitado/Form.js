@@ -22,8 +22,9 @@ async componentDidMount(){
 
 	async setListEvento(){
 			invitadoServices.listEvento().then((res)=>{this.setState({listEvento:res})})
-			alert("DropDown Select info: "+res.data+"***, and ***"+res.message);
-
+	
+			const printHello =()=> console.log("Hello");
+			setTimeout(printHello, 5000);
 
 	}
 

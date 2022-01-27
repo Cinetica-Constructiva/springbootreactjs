@@ -1,5 +1,15 @@
 @charset "UTF-8";
 
+.footer{
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgb(235, 195, 64);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -20,5 +30,3 @@ media-align{
   text-align: right;
   border: 1px solid #898;
 }
-
-

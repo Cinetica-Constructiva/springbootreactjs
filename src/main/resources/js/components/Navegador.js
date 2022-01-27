@@ -8,21 +8,21 @@ import { Navbar, NavDropdown, Nav, Container, NavItem, Form, FormControl, Button
 const Navegador = () => {
   return (
     <Navbar bg="dark" expand="lg" variant="dark" color="white" fixed="top">
-      
+
       <Container fluid>
     <Navbar.Brand href="/invitado">Inicio</Navbar.Brand>
 
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="me-auto">
-    
+
           <NavItem>
           <NavLink className="navegar"to="/">-  Bienvenido  -</NavLink></NavItem>
           <NavItem>
           <NavLink to="/invitado/index">-  Invitados  - </NavLink></NavItem>
           <NavItem>
           <NavLink to="/invitado/form">-  Nuevo  -</NavLink></NavItem>
-          <NavItem><NavLink to="/invitado/edit/5" visible="false">-  Edicion  - </NavLink></NavItem>
+          <NavItem><NavLink to="/invitado/edit/1" visible="false">-  Edicion  - </NavLink></NavItem>
           <NavItem>
           <NavLink to="/acerca">-  Acerca de:  -</NavLink></NavItem>
     </Nav>
